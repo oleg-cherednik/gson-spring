@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.olegcherednik.utils.gson.spring.GsonUtilsAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=ru.olegcherednik.utils.gson.spring.GsonUtilsEnvironmentPostProcessor
+org.springframework.web.WebApplicationInitializer
