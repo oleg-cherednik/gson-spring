@@ -27,8 +27,8 @@ public class StandardGsonUtilsBuilderCustomizer implements GsonUtilsBuilderCusto
         // ---------- extended ----------
 
         map.from(properties::getZoneModifier).to(builder::setZoneModifier);
-//        map.from(properties::getZonedDateTimeFormatter).to(builder::setZonedDateTimeFormatter);
-//        map.from(properties::getLocalDateTimeFormatter).to(builder::setLocalDateTimeFormatter);
+        map.from(properties::getZonedDateTimeFormatter).to(builder::setZonedDateTimeFormatter);
+        map.from(properties::getLocalDateTimeFormatter).to(builder::setLocalDateTimeFormatter);
 
         // ---------- GsonBuilder ----------
 

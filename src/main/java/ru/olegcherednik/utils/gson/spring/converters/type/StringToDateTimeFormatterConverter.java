@@ -35,9 +35,9 @@ public class StringToDateTimeFormatterConverter implements GenericConverter {
     }
 
     private static Object getDateTimeFormatterStaticField(String source) throws NoSuchFieldException, IllegalAccessException {
-        if ("ISO_ZONED_DATE_TIME".equalsIgnoreCase(source))
+        if ("iso_zoned_date_time".equalsIgnoreCase(source))
             return DateTimeFormatter.ISO_ZONED_DATE_TIME;
-        if ("ISO_LOCAL_DATE_TIME".equalsIgnoreCase(source))
+        if ("iso_local_date_time".equalsIgnoreCase(source))
             return DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         return null;
     }

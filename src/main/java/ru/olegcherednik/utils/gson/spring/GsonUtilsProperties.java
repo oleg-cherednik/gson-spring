@@ -7,6 +7,7 @@ import com.google.gson.LongSerializationPolicy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.Function;
 
@@ -23,8 +24,8 @@ public class GsonUtilsProperties {
     // ---------- extended ----------
 
     private Function<ZoneId, ZoneId> zoneModifier;
-//    private DateTimeFormatter zonedDateTimeFormatter;
-//    private DateTimeFormatter localDateTimeFormatter;
+    private DateTimeFormatter zonedDateTimeFormatter;
+    private DateTimeFormatter localDateTimeFormatter;
 
     // ---------- GsonBuilder ----------
 
@@ -45,30 +46,33 @@ public class GsonUtilsProperties {
     private Boolean serializeSpecialFloatingPointValues;
     private Boolean prettyPrinting;
 
-    public enum FieldModifier {
-        PUBLIC(0x00000001),
-        PRIVATE(0x00000002),
-        PROTECTED(0x00000004),
-        STATIC(0x00000008),
-        FINAL(0x00000010),
-        SYNCHRONIZED(0x00000020),
-        VOLATILE(0x00000040),
-        TRANSIENT(0x00000080),
-        NATIVE(0x00000100),
-        INTERFACE(0x00000200),
-        ABSTRACT(0x00000400),
-        STRICT(0x00000800);
+    // ---------- extended ----------
 
-        private final int code;
-
-        FieldModifier(int code) {
-            this.code = code;
-        }
-
-        public int code() {
-            return code;
-        }
+    public Function<ZoneId, ZoneId> getZoneModifier() {
+        return zoneModifier;
     }
+
+    public void setZoneModifier(Function<ZoneId, ZoneId> zoneModifier) {
+        this.zoneModifier = zoneModifier;
+    }
+
+    public DateTimeFormatter getZonedDateTimeFormatter() {
+        return zonedDateTimeFormatter;
+    }
+
+    public void setZonedDateTimeFormatter(DateTimeFormatter zonedDateTimeFormatter) {
+        this.zonedDateTimeFormatter = zonedDateTimeFormatter;
+    }
+
+    public DateTimeFormatter getLocalDateTimeFormatter() {
+        return localDateTimeFormatter;
+    }
+
+    public void setLocalDateTimeFormatter(DateTimeFormatter localDateTimeFormatter) {
+        this.localDateTimeFormatter = localDateTimeFormatter;
+    }
+
+    // ---------- GsonBuilder ----------
 
     public Double getVersion() {
         return version;
@@ -78,12 +82,12 @@ public class GsonUtilsProperties {
         this.version = version;
     }
 
-    public Boolean getLenient() {
-        return lenient;
+    public List<FieldModifier> getExcludeFieldsWithModifiers() {
+        return excludeFieldsWithModifiers;
     }
 
-    public void setLenient(Boolean lenient) {
-        this.lenient = lenient;
+    public void setExcludeFieldsWithModifiers(List<FieldModifier> excludeFieldsWithModifiers) {
+        this.excludeFieldsWithModifiers = excludeFieldsWithModifiers;
     }
 
     public Boolean getGenerateNonExecutableJson() {
@@ -134,38 +138,6 @@ public class GsonUtilsProperties {
         this.fieldNamingPolicy = fieldNamingPolicy;
     }
 
-    public Boolean getDisableHtmlEscaping() {
-        return disableHtmlEscaping;
-    }
-
-    public void setDisableHtmlEscaping(Boolean disableHtmlEscaping) {
-        this.disableHtmlEscaping = disableHtmlEscaping;
-    }
-
-    public Boolean getSerializeSpecialFloatingPointValues() {
-        return serializeSpecialFloatingPointValues;
-    }
-
-    public void setSerializeSpecialFloatingPointValues(Boolean serializeSpecialFloatingPointValues) {
-        this.serializeSpecialFloatingPointValues = serializeSpecialFloatingPointValues;
-    }
-
-    public Boolean getPrettyPrinting() {
-        return prettyPrinting;
-    }
-
-    public void setPrettyPrinting(Boolean prettyPrinting) {
-        this.prettyPrinting = prettyPrinting;
-    }
-
-    public List<FieldModifier> getExcludeFieldsWithModifiers() {
-        return excludeFieldsWithModifiers;
-    }
-
-    public void setExcludeFieldsWithModifiers(List<FieldModifier> excludeFieldsWithModifiers) {
-        this.excludeFieldsWithModifiers = excludeFieldsWithModifiers;
-    }
-
     public FieldNamingStrategy getFieldNamingStrategy() {
         return fieldNamingStrategy;
     }
@@ -198,12 +170,60 @@ public class GsonUtilsProperties {
         this.deserializationExclusionStrategies = deserializationExclusionStrategies;
     }
 
-    public Function<ZoneId, ZoneId> getZoneModifier() {
-        return zoneModifier;
+    public Boolean getLenient() {
+        return lenient;
     }
 
-    public void setZoneModifier(Function<ZoneId, ZoneId> zoneModifier) {
-        this.zoneModifier = zoneModifier;
+    public void setLenient(Boolean lenient) {
+        this.lenient = lenient;
     }
 
+    public Boolean getDisableHtmlEscaping() {
+        return disableHtmlEscaping;
+    }
+
+    public void setDisableHtmlEscaping(Boolean disableHtmlEscaping) {
+        this.disableHtmlEscaping = disableHtmlEscaping;
+    }
+
+    public Boolean getSerializeSpecialFloatingPointValues() {
+        return serializeSpecialFloatingPointValues;
+    }
+
+    public void setSerializeSpecialFloatingPointValues(Boolean serializeSpecialFloatingPointValues) {
+        this.serializeSpecialFloatingPointValues = serializeSpecialFloatingPointValues;
+    }
+
+    public Boolean getPrettyPrinting() {
+        return prettyPrinting;
+    }
+
+    public void setPrettyPrinting(Boolean prettyPrinting) {
+        this.prettyPrinting = prettyPrinting;
+    }
+
+    public enum FieldModifier {
+        PUBLIC(0x00000001),
+        PRIVATE(0x00000002),
+        PROTECTED(0x00000004),
+        STATIC(0x00000008),
+        FINAL(0x00000010),
+        SYNCHRONIZED(0x00000020),
+        VOLATILE(0x00000040),
+        TRANSIENT(0x00000080),
+        NATIVE(0x00000100),
+        INTERFACE(0x00000200),
+        ABSTRACT(0x00000400),
+        STRICT(0x00000800);
+
+        private final int code;
+
+        FieldModifier(int code) {
+            this.code = code;
+        }
+
+        public int code() {
+            return code;
+        }
+    }
 }

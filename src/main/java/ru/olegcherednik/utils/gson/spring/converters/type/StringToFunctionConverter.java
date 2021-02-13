@@ -36,9 +36,9 @@ public class StringToFunctionConverter implements GenericConverter {
     }
 
     private static Object getGsonUtilsBuilderStaticField(String source) throws NoSuchFieldException, IllegalAccessException {
-        if ("ZONE_MODIFIER_USE_ORIGINAL".equalsIgnoreCase(source))
+        if ("original".equalsIgnoreCase(source))
             return GsonUtilsBuilder.ZONE_MODIFIER_USE_ORIGINAL;
-        if ("ZONE_MODIFIER_TO_UTC".equalsIgnoreCase(source))
+        if ("utc".equalsIgnoreCase(source))
             return GsonUtilsBuilder.ZONE_MODIFIER_TO_UTC;
         return null;
     }
