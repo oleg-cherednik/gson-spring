@@ -3,19 +3,17 @@ package ru.olegcherednik.utils.gson.spring;
 import org.springframework.core.Ordered;
 import ru.olegcherednik.utils.gson.GsonUtilsBuilder;
 
-import java.util.function.Consumer;
-
 /**
  * @author Oleg Cherednik
  * @since 07.02.2021
  */
-public interface GsonUtilsBuilderCustomizer extends Consumer<GsonUtilsBuilder>, Ordered {
+public interface GsonUtilsBuilderCustomizer extends Ordered {
+
+    int HIGHEST_PRIORITY = Integer.MIN_VALUE;
+    int DEFAULT_PRIORITY = 0;
 
     boolean isPrettyPrint();
 
-    @Override
-    default int getOrder() {
-        return 0;
-    }
+    void accept(GsonUtilsBuilder builder);
 
 }

@@ -7,11 +7,11 @@ import ru.olegcherednik.utils.gson.GsonUtilsBuilder;
  * @author Oleg Cherednik
  * @since 06.02.2021
  */
-public class StandardGsonUtilsBuilderCustomizer implements GsonUtilsBuilderCustomizer {
+public class DefaultGsonUtilsBuilderCustomizer implements GsonUtilsBuilderCustomizer {
 
     private final GsonUtilsProperties properties;
 
-    public StandardGsonUtilsBuilderCustomizer(GsonUtilsProperties properties) {
+    public DefaultGsonUtilsBuilderCustomizer(GsonUtilsProperties properties) {
         this.properties = properties;
     }
 
@@ -23,12 +23,6 @@ public class StandardGsonUtilsBuilderCustomizer implements GsonUtilsBuilderCusto
     @Override
     public void accept(GsonUtilsBuilder builder) {
         PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
-
-        // ---------- extended ----------
-
-        map.from(properties::getZoneModifier).to(builder::setZoneModifier);
-        map.from(properties::getZonedDateTimeFormatter).to(builder::setZonedDateTimeFormatter);
-        map.from(properties::getLocalDateTimeFormatter).to(builder::setLocalDateTimeFormatter);
 
         // ---------- GsonBuilder ----------
 
@@ -46,14 +40,14 @@ public class StandardGsonUtilsBuilderCustomizer implements GsonUtilsBuilderCusto
         map.from(properties::getDisableInnerClassSerialization).toCall(builder::disableInnerClassSerialization);
         map.from(properties::getLongSerializationPolicy).to(builder::setLongSerializationPolicy);
         map.from(properties::getFieldNamingPolicy).to(builder::setFieldNamingPolicy);
-        map.from(properties::getFieldNamingStrategy).to(builder::setFieldNamingStrategy);
-        map.from(properties::getExclusionStrategies).to(builder::setExclusionStrategies);
-        map.from(properties::getSerializationExclusionStrategies).to(strategies -> strategies.forEach(builder::addSerializationExclusionStrategy));
-        map.from(properties::getDeserializationExclusionStrategies)
-           .to(strategies -> strategies.forEach(builder::addDeserializationExclusionStrategy));
         map.from(properties::getLenient).toCall(builder::setLenient);
         map.from(properties::getDisableHtmlEscaping).toCall(builder::disableHtmlEscaping);
         map.from(properties::getSerializeSpecialFloatingPointValues).toCall(builder::serializeSpecialFloatingPointValues);
+    }
+
+    @Override
+    public int getOrder() {
+        return HIGHEST_PRIORITY;
     }
 
 }

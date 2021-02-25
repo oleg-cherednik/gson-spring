@@ -7,12 +7,14 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -30,15 +32,19 @@ public class GsonUtilsEnvironmentPostProcessor implements EnvironmentPostProcess
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        Set<String> parts = getExistingExcludes(environment);
-        parts.add(GsonAutoConfiguration.class.getCanonicalName());
+        Deque<String> parts = getExistingExcludes(environment);
+
+        if (!parts.contains(GsonAutoConfiguration.class.getCanonicalName()))
+            parts.addFirst(GsonAutoConfiguration.class.getCanonicalName());
+
         overrideValues(environment, Collections.singletonMap(SPRING_EXCLUDE_PROPERTY, String.join(",", parts)));
     }
 
-    protected Set<String> getExistingExcludes(ConfigurableEnvironment environment) {
+    protected Deque<String> getExistingExcludes(ConfigurableEnvironment environment) {
         return Arrays.stream(COMMA.split(environment.getProperty(SPRING_EXCLUDE_PROPERTY, "")))
-                     .filter(str -> str != null && !str.trim().isEmpty())
-                     .collect(Collectors.toSet());
+                     .filter(Objects::nonNull)
+                     .filter(str -> !str.trim().isEmpty())
+                     .collect(Collectors.toCollection(ArrayDeque::new));
     }
 
     protected static void overrideValues(ConfigurableEnvironment environment, Map<String, Object> properties) {

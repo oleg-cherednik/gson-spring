@@ -6,15 +6,12 @@ import feign.Logger;
 import feign.okhttp.OkHttpClient;
 import feign.spring.SpringContract;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import ru.olegcherednik.utils.gson.GsonDecorator;
 import ru.olegcherednik.utils.gson.feign.GsonDecoder;
 import ru.olegcherednik.utils.gson.feign.GsonEncoder;
-import ru.olegcherednik.utils.gson.spring.app.server.SpringBootApp;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootApp.class)
 public abstract class BaseClientTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @LocalServerPort
@@ -22,7 +19,7 @@ public abstract class BaseClientTest extends AbstractTransactionalTestNGSpringCo
     @Autowired
     protected Gson gson;
 
-    protected <T> T buildClient(Class<T> clientClass) {
+    protected final <T> T buildClient(Class<T> clientClass) {
         GsonDecorator gson = new GsonDecorator(this.gson);
 
         return Feign.builder()

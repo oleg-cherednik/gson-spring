@@ -1,31 +1,20 @@
 package ru.olegcherednik.utils.gson.spring;
 
-import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldNamingPolicy;
-import com.google.gson.FieldNamingStrategy;
 import com.google.gson.LongSerializationPolicy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * @author Oleg Cherednik
  * @since 06.02.2021
  */
-@SuppressWarnings({ "FieldNamingConvention", "MethodParameterNamingConvention" })
+@SuppressWarnings({ "FieldNamingConvention", "AssignmentOrReturnOfFieldWithMutableType", "MethodParameterNamingConvention" })
 @ConfigurationProperties(prefix = "spring.gson")
 public class GsonUtilsProperties {
 
     public static final boolean DEF_PRETTY_PRINT = false;
-
-    // ---------- extended ----------
-
-    private Function<ZoneId, ZoneId> zoneModifier;
-    private DateTimeFormatter zonedDateTimeFormatter;
-    private DateTimeFormatter localDateTimeFormatter;
 
     // ---------- GsonBuilder ----------
 
@@ -37,40 +26,10 @@ public class GsonUtilsProperties {
     private Boolean disableInnerClassSerialization;
     private LongSerializationPolicy longSerializationPolicy;
     private FieldNamingPolicy fieldNamingPolicy;
-    private FieldNamingStrategy fieldNamingStrategy;
-    private ExclusionStrategy[] exclusionStrategies;
-    private List<ExclusionStrategy> serializationExclusionStrategies;
-    private List<ExclusionStrategy> deserializationExclusionStrategies;
     private Boolean lenient;
     private Boolean disableHtmlEscaping;
     private Boolean serializeSpecialFloatingPointValues;
     private Boolean prettyPrinting;
-
-    // ---------- extended ----------
-
-    public Function<ZoneId, ZoneId> getZoneModifier() {
-        return zoneModifier;
-    }
-
-    public void setZoneModifier(Function<ZoneId, ZoneId> zoneModifier) {
-        this.zoneModifier = zoneModifier;
-    }
-
-    public DateTimeFormatter getZonedDateTimeFormatter() {
-        return zonedDateTimeFormatter;
-    }
-
-    public void setZonedDateTimeFormatter(DateTimeFormatter zonedDateTimeFormatter) {
-        this.zonedDateTimeFormatter = zonedDateTimeFormatter;
-    }
-
-    public DateTimeFormatter getLocalDateTimeFormatter() {
-        return localDateTimeFormatter;
-    }
-
-    public void setLocalDateTimeFormatter(DateTimeFormatter localDateTimeFormatter) {
-        this.localDateTimeFormatter = localDateTimeFormatter;
-    }
 
     // ---------- GsonBuilder ----------
 
@@ -102,6 +61,7 @@ public class GsonUtilsProperties {
         return excludeFieldsWithoutExposeAnnotation;
     }
 
+    @SuppressWarnings("MethodParameterNamingConvention")
     public void setExcludeFieldsWithoutExposeAnnotation(Boolean excludeFieldsWithoutExposeAnnotation) {
         this.excludeFieldsWithoutExposeAnnotation = excludeFieldsWithoutExposeAnnotation;
     }
@@ -138,38 +98,6 @@ public class GsonUtilsProperties {
         this.fieldNamingPolicy = fieldNamingPolicy;
     }
 
-    public FieldNamingStrategy getFieldNamingStrategy() {
-        return fieldNamingStrategy;
-    }
-
-    public void setFieldNamingStrategy(FieldNamingStrategy fieldNamingStrategy) {
-        this.fieldNamingStrategy = fieldNamingStrategy;
-    }
-
-    public ExclusionStrategy[] getExclusionStrategies() {
-        return exclusionStrategies;
-    }
-
-    public void setExclusionStrategies(ExclusionStrategy[] exclusionStrategies) {
-        this.exclusionStrategies = exclusionStrategies;
-    }
-
-    public List<ExclusionStrategy> getSerializationExclusionStrategies() {
-        return serializationExclusionStrategies;
-    }
-
-    public void setSerializationExclusionStrategies(List<ExclusionStrategy> serializationExclusionStrategies) {
-        this.serializationExclusionStrategies = serializationExclusionStrategies;
-    }
-
-    public List<ExclusionStrategy> getDeserializationExclusionStrategies() {
-        return deserializationExclusionStrategies;
-    }
-
-    public void setDeserializationExclusionStrategies(List<ExclusionStrategy> deserializationExclusionStrategies) {
-        this.deserializationExclusionStrategies = deserializationExclusionStrategies;
-    }
-
     public Boolean getLenient() {
         return lenient;
     }
@@ -203,18 +131,18 @@ public class GsonUtilsProperties {
     }
 
     public enum FieldModifier {
-        PUBLIC(0x00000001),
-        PRIVATE(0x00000002),
-        PROTECTED(0x00000004),
-        STATIC(0x00000008),
-        FINAL(0x00000010),
-        SYNCHRONIZED(0x00000020),
-        VOLATILE(0x00000040),
-        TRANSIENT(0x00000080),
-        NATIVE(0x00000100),
-        INTERFACE(0x00000200),
-        ABSTRACT(0x00000400),
-        STRICT(0x00000800);
+        PUBLIC(0x1),
+        PRIVATE(0x2),
+        PROTECTED(0x4),
+        STATIC(0x8),
+        FINAL(0x10),
+        SYNCHRONIZED(0x20),
+        VOLATILE(0x40),
+        TRANSIENT(0x80),
+        NATIVE(0x100),
+        INTERFACE(0x200),
+        ABSTRACT(0x400),
+        STRICT(0x800);
 
         private final int code;
 

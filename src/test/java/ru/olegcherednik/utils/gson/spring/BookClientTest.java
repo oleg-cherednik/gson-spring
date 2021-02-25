@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("unused")
 @Test
 @Import(BookController.class)
-public class BookClientTest extends BaseClientTest {
+public class BookClientTest extends SpringClientTest {
 
     private BookClient client;
 
