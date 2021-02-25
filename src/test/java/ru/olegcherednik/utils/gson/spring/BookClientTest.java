@@ -33,9 +33,7 @@ public class BookClientTest extends SpringClientTest {
     public void shouldReceiveObjectWhenSendObject() {
         Book actual = client.book(new Book("title", "author"));
         assertThat(actual).isNotNull();
-        assertThat(actual).extracting(Book::getTitle).isEqualTo("title");
-        assertThat(actual).extracting(Book::getAuthor).isEqualTo("author");
-        assertThat(actual).extracting(Book::getResponse).isEqualTo("BookController");
+        assertThat(actual).isEqualTo(new Book("title", "author", "BookController"));
     }
 
     public void shouldReceiveListWhenSendList() {
@@ -45,9 +43,9 @@ public class BookClientTest extends SpringClientTest {
 
         assertThat(actual).isNotNull();
         assertThat(actual).hasSize(2);
-        assertThat(actual).flatExtracting(Book::getTitle, Book::getAuthor, Book::getResponse).contains(
-                "title1", "author1", "BookController1",
-                "title2", "author2", "BookController2");
+        assertThat(actual).containsExactly(
+                new Book("title1", "author1", "BookController1"),
+                new Book("title2", "author2", "BookController2"));
     }
 
     public void shouldReceiveMapWhenSendMap() {
@@ -62,12 +60,12 @@ public class BookClientTest extends SpringClientTest {
         Map<Integer, List<Book>> actual = client.bookMap(books);
         assertThat(actual).isNotNull();
         assertThat(actual).hasSize(2);
-        assertThat(actual.get(1)).flatExtracting(Book::getTitle, Book::getAuthor, Book::getResponse).contains(
-                "title1", "author1", "BookController_1_1",
-                "title2", "author2", "BookController_1_2");
-        assertThat(actual.get(2)).flatExtracting(Book::getTitle, Book::getAuthor, Book::getResponse).contains(
-                "title3", "author3", "BookController_2_1",
-                "title4", "author4", "BookController_2_2");
+        assertThat(actual.get(1)).containsExactly(
+                new Book("title1", "author1", "BookController_1_1"),
+                new Book("title2", "author2", "BookController_1_2"));
+        assertThat(actual.get(2)).containsExactly(
+                new Book("title3", "author3", "BookController_2_1"),
+                new Book("title4", "author4", "BookController_2_2"));
     }
 
     public void shouldReceiveNullWhenSendNull() {

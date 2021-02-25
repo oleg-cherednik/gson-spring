@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import ru.olegcherednik.utils.gson.GsonUtils;
 import ru.olegcherednik.utils.gson.GsonUtilsBuilder;
 import ru.olegcherednik.utils.gson.spring.app.dto.Book;
-import ru.olegcherednik.utils.gson.spring.app.server.BookController;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 17.01.2021
  */
 @Test
-@Import(BookController.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootPrettyPrintConfigTest.SpringBootApp.class)
 public class SpringBootPrettyPrintConfigTest extends BaseClientTest {
 
