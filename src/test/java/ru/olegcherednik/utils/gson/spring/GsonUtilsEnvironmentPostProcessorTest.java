@@ -58,13 +58,13 @@ public class GsonUtilsEnvironmentPostProcessorTest {
         assertThat(actual).isEqualTo("org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration,xxx,yyy,zzz");
     }
 
-    public void shouldNotAddFirstGsonAutoConfigurationToIgnoreWhenIgnoreListAlreadyContainIt() {
+    public void shouldNotAddGsonAutoConfigurationToIgnoreWhenIgnoreListAlreadyContainIt() {
         ConfigurableEnvironment environment = mock(ConfigurableEnvironment.class);
         SpringApplication application = mock(SpringApplication.class);
         MutablePropertySources propertySources = new MutablePropertySources();
 
         when(environment.getProperty(eq(SPRING_EXCLUDE_PROPERTY), any(String.class)))
-                .thenReturn("org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration");
+                .thenReturn("org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration,xxx,yyy,zzz");
         when(environment.getPropertySources()).thenReturn(propertySources);
 
         processor.postProcessEnvironment(environment, application);
@@ -73,7 +73,7 @@ public class GsonUtilsEnvironmentPostProcessorTest {
         assertThat(propertySource).isNotNull();
 
         String actual = (String)propertySource.getProperty(SPRING_EXCLUDE_PROPERTY);
-        assertThat(actual).isEqualTo("org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration");
+        assertThat(actual).isEqualTo("org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration,xxx,yyy,zzz");
     }
 
 }

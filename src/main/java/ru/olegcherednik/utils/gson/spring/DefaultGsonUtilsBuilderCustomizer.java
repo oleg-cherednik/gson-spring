@@ -26,7 +26,7 @@ public class DefaultGsonUtilsBuilderCustomizer implements GsonUtilsBuilderCustom
 
         // ---------- GsonBuilder ----------
 
-        map.from(properties::getVersion).to(builder::setVersion);
+//        map.from(properties::getVersion).to(builder::setVersion);
         map.from(properties::getExcludeFieldsWithModifiers).to(fieldModifiers -> {
             int[] modifiers = fieldModifiers.stream()
                                             .mapToInt(GsonUtilsProperties.FieldModifier::code)
@@ -38,8 +38,8 @@ public class DefaultGsonUtilsBuilderCustomizer implements GsonUtilsBuilderCustom
         map.from(properties::getExcludeFieldsWithoutExposeAnnotation).toCall(builder::excludeFieldsWithoutExposeAnnotation);
         map.from(properties::getSerializeNulls).toCall(builder::serializeNulls);
         map.from(properties::getDisableInnerClassSerialization).toCall(builder::disableInnerClassSerialization);
-        map.from(properties::getLongSerializationPolicy).to(builder::setLongSerializationPolicy);
-        map.from(properties::getFieldNamingPolicy).to(builder::setFieldNamingPolicy);
+//        map.from(properties::getLongSerializationPolicy).to(builder::setLongSerializationPolicy);
+//        map.from(properties::getFieldNamingPolicy).to(builder::setFieldNamingPolicy);
         map.from(properties::getLenient).toCall(builder::setLenient);
         map.from(properties::getDisableHtmlEscaping).toCall(builder::disableHtmlEscaping);
         map.from(properties::getSerializeSpecialFloatingPointValues).toCall(builder::serializeSpecialFloatingPointValues);

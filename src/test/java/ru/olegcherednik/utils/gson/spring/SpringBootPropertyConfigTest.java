@@ -1,7 +1,5 @@
 package ru.olegcherednik.utils.gson.spring;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.LongSerializationPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,8 +34,8 @@ public class SpringBootPropertyConfigTest extends BaseClientTest {
         assertThat(properties.getExcludeFieldsWithoutExposeAnnotation()).isTrue();
         assertThat(properties.getSerializeNulls()).isTrue();
         assertThat(properties.getDisableInnerClassSerialization()).isTrue();
-        assertThat(properties.getLongSerializationPolicy()).isSameAs(LongSerializationPolicy.DEFAULT);
-        assertThat(properties.getFieldNamingPolicy()).isSameAs(FieldNamingPolicy.IDENTITY);
+//        assertThat(properties.getLongSerializationPolicy()).isSameAs(LongSerializationPolicy.DEFAULT);
+//        assertThat(properties.getFieldNamingPolicy()).isSameAs(FieldNamingPolicy.IDENTITY);
         assertThat(properties.getLenient()).isTrue();
         assertThat(properties.getDisableHtmlEscaping()).isTrue();
         assertThat(properties.getSerializeSpecialFloatingPointValues()).isFalse();

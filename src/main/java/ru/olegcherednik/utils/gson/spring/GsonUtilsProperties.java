@@ -1,7 +1,7 @@
 package ru.olegcherednik.utils.gson.spring;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.LongSerializationPolicy;
+//import com.google.gson.FieldNamingPolicy;
+//import com.google.gson.LongSerializationPolicy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
@@ -24,8 +24,8 @@ public class GsonUtilsProperties {
     private Boolean excludeFieldsWithoutExposeAnnotation;
     private Boolean serializeNulls;
     private Boolean disableInnerClassSerialization;
-    private LongSerializationPolicy longSerializationPolicy;
-    private FieldNamingPolicy fieldNamingPolicy;
+//    private LongSerializationPolicy longSerializationPolicy;
+//    private FieldNamingPolicy fieldNamingPolicy;
     private Boolean lenient;
     private Boolean disableHtmlEscaping;
     private Boolean serializeSpecialFloatingPointValues;
@@ -82,21 +82,21 @@ public class GsonUtilsProperties {
         this.disableInnerClassSerialization = disableInnerClassSerialization;
     }
 
-    public LongSerializationPolicy getLongSerializationPolicy() {
-        return longSerializationPolicy;
-    }
+//    public LongSerializationPolicy getLongSerializationPolicy() {
+//        return longSerializationPolicy;
+//    }
 
-    public void setLongSerializationPolicy(LongSerializationPolicy longSerializationPolicy) {
-        this.longSerializationPolicy = longSerializationPolicy;
-    }
+//    public void setLongSerializationPolicy(LongSerializationPolicy longSerializationPolicy) {
+//        this.longSerializationPolicy = longSerializationPolicy;
+//    }
 
-    public FieldNamingPolicy getFieldNamingPolicy() {
-        return fieldNamingPolicy;
-    }
+//    public FieldNamingPolicy getFieldNamingPolicy() {
+//        return fieldNamingPolicy;
+//    }
 
-    public void setFieldNamingPolicy(FieldNamingPolicy fieldNamingPolicy) {
-        this.fieldNamingPolicy = fieldNamingPolicy;
-    }
+//    public void setFieldNamingPolicy(FieldNamingPolicy fieldNamingPolicy) {
+//        this.fieldNamingPolicy = fieldNamingPolicy;
+//    }
 
     public Boolean getLenient() {
         return lenient;
