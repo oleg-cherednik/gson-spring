@@ -1,4 +1,4 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import com.google.gson.Gson;
 import org.springframework.http.converter.HttpMessageConverter;

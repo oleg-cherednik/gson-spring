@@ -1,8 +1,8 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import org.mockito.ArgumentCaptor;
 import org.testng.annotations.Test;
-import ru.olegcherednik.utils.gson.GsonUtilsBuilder;
+import ru.olegcherednik.gson.utils.GsonUtilsBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;

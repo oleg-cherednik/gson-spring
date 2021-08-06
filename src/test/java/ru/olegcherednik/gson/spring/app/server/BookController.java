@@ -1,11 +1,11 @@
-package ru.olegcherednik.utils.gson.spring.app.server;
+package ru.olegcherednik.gson.spring.app.server;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.olegcherednik.utils.gson.spring.app.dto.Book;
+import ru.olegcherednik.gson.spring.app.dto.Book;
 
 import java.util.List;
 import java.util.Map;

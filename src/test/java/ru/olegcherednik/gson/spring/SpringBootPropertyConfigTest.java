@@ -1,4 +1,4 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.testng.annotations.Test;
-import ru.olegcherednik.utils.gson.spring.app.server.BookController;
+import ru.olegcherednik.gson.spring.app.server.BookController;
 
 import java.util.Arrays;
 
@@ -18,8 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @Test
 @Import(BookController.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootPropertyConfigTest.SpringBootApp.class)
 @PropertySource("classpath:spring.gson.properties")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootPropertyConfigTest.SpringBootApp.class)
 public class SpringBootPropertyConfigTest extends BaseClientTest {
 
     @Autowired

@@ -1,4 +1,4 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -11,8 +11,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ru.olegcherednik.utils.gson.spring.GsonUtilsEnvironmentPostProcessor.PROPERTY_SOURCE_NAME;
-import static ru.olegcherednik.utils.gson.spring.GsonUtilsEnvironmentPostProcessor.SPRING_EXCLUDE_PROPERTY;
+import static ru.olegcherednik.gson.spring.GsonUtilsEnvironmentPostProcessor.PROPERTY_SOURCE_NAME;
+import static ru.olegcherednik.gson.spring.GsonUtilsEnvironmentPostProcessor.SPRING_EXCLUDE_PROPERTY;
 
 /**
  * @author Oleg Cherednik

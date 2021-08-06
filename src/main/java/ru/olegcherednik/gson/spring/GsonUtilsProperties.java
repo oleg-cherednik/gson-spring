@@ -1,4 +1,4 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 //import com.google.gson.FieldNamingPolicy;
 //import com.google.gson.LongSerializationPolicy;

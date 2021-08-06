@@ -1,10 +1,10 @@
-package ru.olegcherednik.utils.gson.spring.app.client;
+package ru.olegcherednik.gson.spring.app.client;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.olegcherednik.utils.gson.spring.app.dto.Book;
+import ru.olegcherednik.gson.spring.app.dto.Book;
 
 import java.util.List;
 import java.util.Map;

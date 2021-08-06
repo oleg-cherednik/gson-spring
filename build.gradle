@@ -1,60 +1,52 @@
 buildscript {
     repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+        mavenLocal()
+        mavenCentral()
     }
 }
 
 plugins {
-    id 'java'
-    id 'java-library'
-    id 'application'
     id 'jacoco'
-    id 'maven'
-    id 'io.codearte.nexus-staging' version '0.11.0'
-//    id "com.github.hierynomus.license" version "0.15.0"
-}
+    id 'java-library'
+    id 'org.cadixdev.licenser' version '0.6.1'
 
-apply plugin: 'com.bmuschko.nexus'
+    id 'signing'
+    id 'maven-publish'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
+}
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-group 'ru.oleg-cherednik.utils.gson'
+group 'ru.oleg-cherednik.gson'
 version '2.1'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
-mainClassName = 'unknown'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
 configurations {
-    jar.archiveName = 'gson-spring-${version}.jar'
+    jar.archiveFileName = "${rootProject.name}-${version}.jar"
 }
 
 dependencies {
-    compileOnly "com.google.code.gson:gson:${property('gson.version')}"
-    compileOnly "org.springframework.boot:spring-boot-autoconfigure:${property('spring-boot.version')}"
-    compileOnly "org.springframework.boot:spring-boot-starter-web:${property('spring-boot.version')}"
+    api "com.google.code.gson:gson:${property('gson.version')}"
+    api "org.springframework.boot:spring-boot-autoconfigure:${property('spring-boot.version')}"
+    api "org.springframework.boot:spring-boot-starter-web:${property('spring-boot.version')}"
 
-    api "ru.oleg-cherednik.utils.gson:gson-feign:${property('gson-feign.version')}"
+    implementation "ru.oleg-cherednik.gson:gson-utils:${property('gson-utils.version')}"
 
     testImplementation('org.testng:testng:7.3.0') {
         exclude group: 'junit', module: 'junit'
     }
 
+    testImplementation "org.springframework.boot:spring-boot-autoconfigure:${property('spring-boot.version')}"
     testImplementation "com.google.code.gson:gson:${property('gson.version')}"
-    testImplementation "io.github.openfeign:feign-okhttp:${property('feign.version')}"
-    testImplementation "io.github.openfeign:feign-spring4:${property('feign.version')}"
-    testImplementation "io.github.openfeign:feign-gson:${property('feign.version')}"
 
     testImplementation("org.springframework.boot:spring-boot-starter-web:${property('spring-boot.version')}") {
 //        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-json'
@@ -72,8 +64,8 @@ dependencies {
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        html.enabled true
+        xml.required = true
+        html.required = true
     }
 }
 
@@ -83,56 +75,70 @@ test {
     useTestNG()
 }
 
-//license {
-//    header = file('license_header.txt')
-//    include "**/*.java"
-//    exclude "**/*Test.java"
-//}
+license {
+    header rootProject.file('APACHE.txt')
+    include '**/*.java'
+    newLine false
+}
 
-modifyPom {
-    project {
-        name 'gson-spring'
-        description 'Gson support for Spring'
-        url 'https://github.com/oleg-cherednik/GsonSpring'
-        inceptionYear '2021'
+signing {
+    sign configurations.archives
+}
 
-        scm {
-            url 'https://github.com/oleg-cherednik/GsonSpring'
-            connection 'scm:https://github.com/oleg-cherednik/GsonSpring.git'
-            developerConnection 'scm:git@github.com:oleg-cherednik/GsonSpring.git'
-        }
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
-        licenses {
-            license {
-                name 'The Apache Software License, Version 2.0'
-                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                distribution 'repo'
-            }
-        }
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
 
-        developers {
-            developer {
-                id 'oleg.cherednik'
-                name 'Oleg Cherednik'
-                email 'oleg.cherednik@gmail.com'
+            pom {
+                name = rootProject.name
+
+//                description = "\n" +
+//                        "    Gson usability utilities.\n" +
+//                        "    It's designed to add additional features like easy and centralized configuration,\n" +
+//                        "    builder or static method set.\n" +
+//                        "  "
+
+                url = 'https://github.com/oleg-cherednik/gson-spring'
+                inceptionYear = '2021'
+
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'oleg.cherednik'
+                        name = 'Oleg Cherednik'
+                        email = 'oleg.cherednik@gmail.com'
+                    }
+                }
+
+                scm {
+                    url = 'https://github.com/oleg-cherednik/gson-spring'
+                    connection = 'scm:https://github.com/oleg-cherednik/gson-spring.git'
+                    developerConnection = 'scm:git@github.com:oleg-cherednik/gson-spring.git'
+                }
             }
         }
     }
+
+    repositories {
+        mavenLocal()
+    }
 }
 
-extraArchive {
-    sources true
-    tests true
-    javadoc true
-}
-
-nexus {
-    sign true
-    repositoryUrl 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-    snapshotRepositoryUrl 'https://oss.sonatype.org/content/repositories/snapshots'
-}
-
-nexusStaging {
-    packageGroup 'ru.oleg-cherednik'
-    stagingProfileId 'd3835bf60f05b9'
+nexusPublishing {
+    repositories {
+        sonatype()
+    }
 }

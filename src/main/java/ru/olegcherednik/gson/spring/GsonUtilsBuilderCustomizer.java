@@ -1,7 +1,7 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import org.springframework.core.Ordered;
-import ru.olegcherednik.utils.gson.GsonUtilsBuilder;
+import ru.olegcherednik.gson.utils.GsonUtilsBuilder;
 
 /**
  * @author Oleg Cherednik

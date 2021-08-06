@@ -1,13 +1,13 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.testng.annotations.Test;
-import ru.olegcherednik.utils.gson.GsonUtils;
-import ru.olegcherednik.utils.gson.GsonUtilsBuilder;
-import ru.olegcherednik.utils.gson.spring.app.dto.Book;
+import ru.olegcherednik.gson.spring.app.dto.Book;
+import ru.olegcherednik.gson.utils.GsonUtils;
+import ru.olegcherednik.gson.utils.GsonUtilsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,6 +55,7 @@ public class SpringBootPrettyPrintConfigTest extends BaseClientTest {
             }
 
         }
+
     }
 
 }

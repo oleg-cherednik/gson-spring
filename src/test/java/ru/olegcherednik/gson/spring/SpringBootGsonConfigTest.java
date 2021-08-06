@@ -1,76 +1,78 @@
-package ru.olegcherednik.utils.gson.spring;
+package ru.olegcherednik.gson.spring;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.testng.annotations.BeforeMethod;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.testng.annotations.Test;
-import ru.olegcherednik.utils.gson.GsonUtilsHelper;
-import ru.olegcherednik.utils.gson.spring.app.client.BookClient;
-import ru.olegcherednik.utils.gson.spring.app.dto.Book;
-import ru.olegcherednik.utils.gson.spring.app.server.BookController;
+import ru.olegcherednik.gson.spring.app.dto.Book;
+import ru.olegcherednik.gson.utils.GsonUtils;
+import ru.olegcherednik.gson.utils.GsonUtilsHelper;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.inOrder;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 /**
  * @author Oleg Cherednik
  * @since 17.01.2021
  */
 @Test
-@Import(BookController.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootGsonConfigTest.SpringBootApp.class)
 public class SpringBootGsonConfigTest extends BaseClientTest {
 
-    private BookClient client;
-
-    @BeforeMethod
-    public void setUp() {
-        client = buildClient(BookClient.class);
-    }
-
-    public void shouldUseGsonOnBothFeignAndSpringSides() {
-        InOrder order = inOrder(gson);
+    public void shouldUseGsonOnSpringSide() throws Exception {
         Book request = new Book("title", "author");
         Book response = new Book("title", "author", "BookController");
+        InOrder order = inOrder(gson);
 
-        Book actual = client.book(request);
-        assertThat(actual).isNotNull();
+        MvcResult result = mockMvc.perform(post("/book")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(GsonUtils.writeValue(request)))
+                                  .andReturn();
+        String json = result.getResponse().getContentAsString();
+        assertThat(json).isNotBlank();
+        assertThat(json).contains("\n");
+
+        Book actual = GsonUtils.readValue(json, Book.class);
         assertThat(actual).isEqualTo(response);
 
-        order.verify(gson).toJson(eq(request), eq(Book.class), any(JsonWriter.class));
         order.verify(gson).fromJson(any(Reader.class), eq((Type)Book.class));
         order.verify(gson).toJson(eq(response), eq(Book.class), any(JsonWriter.class));
-        order.verify(gson).fromJson(any(Reader.class), eq((Type)Book.class));
     }
 
-    @SuppressWarnings("EmptyClass")
     @SpringBootApplication
     @Import(SpringBootApp.Config.class)
     public static class SpringBootApp {
 
+        public static void main(String... args) {
+            SpringApplication.run(SpringBootApp.class, args);
+        }
+
         public static class Config {
 
-            private final Gson gson = Mockito.spy(GsonUtilsHelper.DEFAULT_BUILDER.gson());
+            private final Gson gson = Mockito.spy(GsonUtilsHelper.createPrettyPrintGson());
 
             @Bean
-            public Supplier<Gson> gsonUtilsBuilder(List<GsonUtilsBuilderCustomizer> customizers) {
+            public Supplier<Gson> gsonSupplier() {
                 return () -> gson;
             }
 
         }
+
     }
 
 }

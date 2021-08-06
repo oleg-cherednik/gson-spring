@@ -1,16 +1,23 @@
-package ru.olegcherednik.utils.gson.spring.app.server;
+package ru.olegcherednik.gson.spring.app.server;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.SpringApplication;
 
 /**
  * @author Oleg Cherednik
  * @since 30.01.2021
  */
-@SpringBootApplication//(exclude = { TransactionAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class })
+//@SpringBootApplication
+//        (exclude = {
+//        TransactionAutoConfiguration.class,
+//        DataSourceTransactionManagerAutoConfiguration.class,
+//        GsonAutoConfiguration.class })
 //(exclude = GsonAutoConfiguration.class)
-@Import(SpringBootApp.Config.class)
+//@Import(SpringBootApp.Config.class)
 public class SpringBootApp {
+
+    public static void main(String... args) {
+        SpringApplication.run(SpringBootApp.class, args);
+    }
 
     public static class Config {
 
@@ -30,4 +37,5 @@ public class SpringBootApp {
 //        }
 
     }
+
 }

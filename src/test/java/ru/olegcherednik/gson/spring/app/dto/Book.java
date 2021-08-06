@@ -1,4 +1,4 @@
-package ru.olegcherednik.utils.gson.spring.app.dto;
+package ru.olegcherednik.gson.spring.app.dto;
 
 import java.util.Objects;
 
