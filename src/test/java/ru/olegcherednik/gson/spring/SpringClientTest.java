@@ -18,8 +18,11 @@
  */
 package ru.olegcherednik.gson.spring;
 
+import org.springframework.boot.test.context.SpringBootTest;
+
 @SuppressWarnings("EmptyClass")
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootApp.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = SpringBootPrettyPrintConfigTest.SpringBootApp.class)
 public abstract class SpringClientTest extends BaseClientTest {
 
 }

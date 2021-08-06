@@ -19,7 +19,6 @@
 package ru.olegcherednik.gson.spring;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.testng.annotations.Test;
@@ -34,8 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 17.01.2021
  */
 @Test
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootPrettyPrintConfigTest.SpringBootApp.class)
-public class SpringBootPrettyPrintConfigTest extends BaseClientTest {
+public class SpringBootPrettyPrintConfigTest extends SpringClientTest {
 
     public void shouldUsePrettyPrintJsonWhenPrettyPrintConfigured() {
         Book book = new Book("title", "author");

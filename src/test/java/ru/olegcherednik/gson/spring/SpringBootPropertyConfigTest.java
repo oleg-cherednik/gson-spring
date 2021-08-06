@@ -20,7 +20,6 @@ package ru.olegcherednik.gson.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.testng.annotations.Test;
@@ -37,8 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Test
 @Import(BookController.class)
 @PropertySource("classpath:spring.gson.properties")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SpringBootPropertyConfigTest.SpringBootApp.class)
-public class SpringBootPropertyConfigTest extends BaseClientTest {
+public class SpringBootPropertyConfigTest extends SpringClientTest {
 
     @Autowired
     private GsonUtilsProperties properties;

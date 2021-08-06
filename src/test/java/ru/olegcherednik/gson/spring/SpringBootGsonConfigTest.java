@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
@@ -75,10 +74,6 @@ public class SpringBootGsonConfigTest extends BaseClientTest {
     @SpringBootApplication
     @Import(SpringBootApp.Config.class)
     public static class SpringBootApp {
-
-        public static void main(String... args) {
-            SpringApplication.run(SpringBootApp.class, args);
-        }
 
         public static class Config {
 
